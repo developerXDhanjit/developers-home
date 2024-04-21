@@ -34,7 +34,7 @@ async function getQuote() {
 
 //Displaying it on the website on load 
 window.addEventListener("DOMContentLoaded", () => {
-    // getQuote()
+    getQuote()
 })
 
 
