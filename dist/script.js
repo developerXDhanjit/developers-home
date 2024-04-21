@@ -58,30 +58,79 @@ const myForm = document.querySelector('#searchForm')
 
 
 // Default Seach google 
-myForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+/* myForm.addEventListener("submit", (event) => {
+       event.preventDefault();
+   
+   
+       const userInputValue = userInput.value;
+   
+       let redirectUrl = `https://www.google.com/search?q=${userInputValue}`
+   
+       if (userInputValue.trim() === '') {
+           alert('Enter something to search')
+           return
+       }
+   
+       window.open(redirectUrl, '_blank')
+       userInput.value = ''
+
+}) */
 
 
-    const userInputValue = userInput.value;
-
-    let redirectUrl = `https://www.google.com/search?q=${userInputValue}`
-
-    if (userInputValue.trim() === '') {
-        alert('Enter something to search')
-        return
-    }
-
-    window.open(redirectUrl, '_blank')
-    userInput.value = ''
-
-})
 
 // Choosing different engines 
 
+let searchButtons = Array.from(document.getElementById("search-engine").children);
+
+
+let selectedSearchEngine = "google"
+
+let searchTerm = userInput.value
+let redirectUrl;
+
+
 let searchEngines = {
     google: "https://www.google.com/search?q=",
-    wiki: "https://en.wikipedia.org/wiki/w/index.php?title=",
+    wiki: "https://en.wikipedia.org/wiki/",
     yahoo: "https://search.yahoo.com/search?p=",
-    duckduckgo: "https://duckduckgo.com/?q=" ,
+    duckduckgo: "https://duckduckgo.com/?q=",
     bing: "http://www.bing.com/search?q=",
+}
+
+/* Selecting the search engine */
+
+searchButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        selectedSearchEngine = button.id.toLocaleLowerCase()
+        redirect(selectedSearchEngine, searchTerm)
+        /* Style to change the border to each element */
+    })
+})
+
+userInput.addEventListener('keyup', (event) => {
+    event.preventDefault()
+    searchTerm = userInput.value
+    if (event.key === "Enter" && searchTerm) {
+        redirect(selectedSearchEngine, searchTerm)
+    }
+
+})
+
+
+/* Function to redirect To the Url */
+
+function redirect(searchEngineName, searchTerm) {
+    if (searchTerm === "") {
+        console.log("Value is  empty");
+
+    } else {
+
+        searchTerm = userInput.value
+
+        redirectUrl = searchEngines[searchEngineName] + searchTerm
+
+        window.open(redirectUrl, "_blank")
+
+        userInput.value = ''
+    }
 }
